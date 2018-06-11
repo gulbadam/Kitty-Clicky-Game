@@ -1,0 +1,10 @@
+.kitty {
+    background: radial-gradient(rgb(7, 94, 244), rgb(80, 218, 242));
+}
+
+.kitty:hover {
+    /* transform: rotate(360deg);
+    transform: scale(1.3); */
+    transition: all 1s;
+    background: radial-gradient(rgb(80, 218, 242), rgb(216, 211, 221));
+}
