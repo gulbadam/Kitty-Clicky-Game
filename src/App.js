@@ -49,25 +49,36 @@ clickKitten = event => {
   const curKitten =event.target.alt;
   const clickedKit = this.state.clicked.indexOf(curKitten)> -1;
   if(clickedKit) {
-    alert("you lost!");
+    alert("You lost!");
     this.setState({
+      message: 'You lost!',
+
       robots:this.shuffleRobots(robots),
       clicked: [],
       score: 0,
-      topScore: 0
+      topScore: 0,
+      topScore: (this.state.score>this.state.topScore) ? this.state.score : this.state.topScore
+
     })
   } else{
     this.setState({
+      message: "Go",
       robots: this.shuffleRobots(robots),
       clicked: this.state.clicked.concat(curKitten),
-      score: this.state.score +1
+      score: this.state.score +1,
+      //topScore: this.state.topScore +1
+
     }, () => {
       if (this.state.score === 18) {
 alert ("You win!");
 this.setState({
+  message: 'You win!',
+
   robots: this.shuffleRobots(robots),
   clicked: [],
-  score: 0
+  score: 0,
+  topScore: this.state.topScore
+
 })
 
       }
@@ -83,7 +94,11 @@ this.setState({
             
           <div className="tc">
           {/* <h1 className="sc">Kitty Clicky Game</h1> */}
-            <Nav />
+            <Nav 
+            score={this.state.score}
+            message={this.state.message}
+            topScore={this.state.topScore}
+             />
             <Container />
             <Scroll>
               {this.state.robots.map(robot => (
