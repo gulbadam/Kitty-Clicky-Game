@@ -20,14 +20,17 @@ import Container from './components/Container';
 class App extends Component {
   state = {
     message: '',
+    score: 0,
     topScore: 0,
-    curScore: 0,
-    robots
+    robots,
+    clicked: []
     
 
 
   };
+ 
   componentDidMount() {
+
     // fetch('https://jsonplaceholder.typicode.com/users')
     //   .then(response => response.json())
     //   .then(users => this.setState({ robots: users })
@@ -35,6 +38,42 @@ class App extends Component {
     // }
   
   };
+ shuffleRobots = arr => {
+    arr.sort((a, b) => Math.random() - 0.5);
+    return arr;
+    
+};
+
+clickKitten = event => { 
+  console.log(event.target);
+  const curKitten =event.target.alt;
+  const clickedKit = this.state.clicked.indexOf(curKitten)> -1;
+  if(clickedKit) {
+    alert("you lost!");
+    this.setState({
+      robots:this.shuffleRobots(robots),
+      clicked: [],
+      score: 0,
+      topScore: 0
+    })
+  } else{
+    this.setState({
+      robots: this.shuffleRobots(robots),
+      clicked: this.state.clicked.concat(curKitten),
+      score: this.state.score +1
+    }, () => {
+      if (this.state.score === 18) {
+alert ("You win!");
+this.setState({
+  robots: this.shuffleRobots(robots),
+  clicked: [],
+  score: 0
+})
+
+      }
+    })
+  }
+ }
     render(){
    
       //console.log(filterRobots);
@@ -43,13 +82,14 @@ class App extends Component {
           
             
           <div className="tc">
-          {/* <h1 className="bg-washed-red self-center f1  pa3 mh5 shadow-3 hover-bg-gold">Kitty Clicky Game</h1> */}
+          {/* <h1 className="sc">Kitty Clicky Game</h1> */}
             <Nav />
             <Container />
             <Scroll>
               {this.state.robots.map(robot => (
               
                 <Card
+                clickKitten={this.clickKitten}
                 id={robot.id}
                 key={robot.id}
                 name={robot.name}
