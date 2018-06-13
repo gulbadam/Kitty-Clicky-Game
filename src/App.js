@@ -10,6 +10,8 @@ import robots from "./robots.json";
 import Nav from './components/Nav';
 
 import Container from './components/Container';
+import Footer from './components/Footer';
+
 
 
 
@@ -92,7 +94,7 @@ this.setState({
         return (
           
             
-          <div className="tc">
+          <div >
           {/* <h1 className="sc">Kitty Clicky Game</h1> */}
             <Nav 
             score={this.state.score}
@@ -112,6 +114,7 @@ this.setState({
             ))}
               
             </Scroll>
+            <Footer />
 
           </div>
         )
