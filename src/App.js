@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Scroll from './components/Scroll';
-import Cardlist from './components/Cardlist';
 import './App.css';
 import Card from "./components/Card";
 import './styles/Card.css';
@@ -12,13 +10,6 @@ import Nav from './components/Nav';
 import Container from './components/Container';
 import Footer from './components/Footer';
 
-
-
-
-
-
-
-
 class App extends Component {
   state = {
     message: '',
@@ -26,56 +17,44 @@ class App extends Component {
     topScore: 0,
     robots,
     clicked: []
-    
-
-
-  };
+    }
  
-  componentDidMount() {
-
-    // fetch('https://jsonplaceholder.typicode.com/users')
-    //   .then(response => response.json())
-    //   .then(users => this.setState({ robots: users })
-    //   )
-    // }
-  
-  };
+componentDidMount() {
+  }
  shuffleRobots = arr => {
-    arr.sort((a, b) => Math.random() - 0.5);
+    arr.sort((a, b) => Math.random() - 0.5)
     return arr;
     
-};
+}
 
 clickKitten = event => { 
   console.log(event.target);
   const curKitten =event.target.alt;
   const clickedKit = this.state.clicked.indexOf(curKitten)> -1;
   if(clickedKit) {
-    alert("You lost!");
+    //alert("You guessed incorrectly!");
     this.setState({
-      message: 'You lost!',
-
+      message: 'You guessed incorrectly!',
+      clNm: 'tc red f3  dib  w-40',
       robots:this.shuffleRobots(robots),
       clicked: [],
       score: 0,
       topScore: 0,
       topScore: (this.state.score>this.state.topScore) ? this.state.score : this.state.topScore
-
     })
   } else{
     this.setState({
-      message: "Go",
+      message: "You guessed correctly!",
       robots: this.shuffleRobots(robots),
+      clNm: ('tc green f3  dib  w-40'),
       clicked: this.state.clicked.concat(curKitten),
       score: this.state.score +1,
-      //topScore: this.state.topScore +1
-
-    }, () => {
+  }, () => {
       if (this.state.score === 18) {
-alert ("You win!");
+//alert ("You win!");
 this.setState({
   message: 'You win!',
-
+  clNm: 'tc light-purple f3  dib  w-40',
   robots: this.shuffleRobots(robots),
   clicked: [],
   score: 0,
@@ -92,17 +71,17 @@ this.setState({
       //console.log(filterRobots);
   
         return (
-          
-            
-          <div >
-          {/* <h1 className="sc">Kitty Clicky Game</h1> */}
+          <div>
             <Nav 
             score={this.state.score}
             message={this.state.message}
             topScore={this.state.topScore}
+            clNm={this.state.clNm}
+            
              />
-            <Container />
             <Scroll>
+            <Container />
+            
               {this.state.robots.map(robot => (
               
                 <Card
@@ -110,12 +89,10 @@ this.setState({
                 id={robot.id}
                 key={robot.id}
                 name={robot.name}
-                 />
+                />
             ))}
-              
             </Scroll>
             <Footer />
-
           </div>
         )
       }
